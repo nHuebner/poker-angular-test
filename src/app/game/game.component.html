@@ -1,0 +1,95 @@
+<div class="board">
+    <div class="select-wrapper" [class.active]="playerSelectActive">
+        <h3>Select Players</h3>
+        <div class="button-wrapper">
+            <button *ngFor="let item of createRange(5); let i = index;" (click)="onSelect($event)" value="{{i + 1}}" class="button">{{i + 2}}</button>
+        </div>
+    </div>
+
+    <ul *ngIf="players.length > 1" class="player-list">
+        <li *ngFor="let player of players" class="player-item">
+            <h4>{{player.name}}</h4>
+            <div *ngFor="let card of player.hand" class="card">
+                <div class="card-view " [class.active]="showPlayerCards">
+                    <div class="flipper">
+                        <div class="front">
+                            <img src="../../assets/img/png/back.png" width="179" height="250" class="picture-card">
+                        </div>
+                        <div class="back">
+                            <img src="../../assets/img/png/{{card.suit}}{{card.rank}}.png" width="179" height="250" class="picture-card">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+
+    <div class="community-cards" [class.active]="communityState">
+        <div class="flop cards">
+            <h4>Flop</h4>
+            <div *ngFor="let card of flopCards" class="card">
+                <div class="card-view" [class.active]="showFlop">
+                    <div class="flipper">
+                        <div class="front">
+                            <img src="../../assets/img/png/back.png" width="179" height="250" class="picture-card">
+                        </div>
+                        <div class="back">
+                            <img src="../../assets/img/png/{{card.suit}}{{card.rank}}.png" width="179" height="250" class="picture-card">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="playState === 'turn' || playState === 'river'" class="turn cards">
+            <h4>Turn</h4>
+            <div class="card">
+                <div class="card-view" [class.active]="showTurn">
+                    <div class="flipper">
+                        <div class="front">
+                            <img src="../../assets/img/png/back.png" width="179" height="250" class="picture-card">
+                        </div>
+                        <div class="back">
+                            <img src="../../assets/img/png/{{turnCard[0].suit}}{{turnCard[0].rank}}.png" width="179" height="250" class="picture-card">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="playState === 'river'" class="river cards">
+            <h4>River</h4>
+            <div class="card">
+                <div class="card-view" [class.active]="showRiver">
+                    <div class="flipper">
+                        <div class="front">
+                            <img src="../../assets/img/png/back.png" width="179" height="250" class="picture-card">
+                        </div>
+                        <div class="back">
+                            <img src="../../assets/img/png/{{riverCard[0].suit}}{{riverCard[0].rank}}.png" width="179" height="250" class="picture-card">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="ranking.length > 0">
+        <div class="score-wrapper" [class.active]="rankingVisible">
+            <div class="player-score">
+                <div class="head">
+                    <div class="name">Name</div>
+                    <div class="flop">Flop</div>
+                    <div class="river">River</div>
+                    <div class="turn">Turn</div>
+                    <div class="final">Rank</div>
+                </div>
+                <div *ngFor="let player of ranking; let i = index; let odd = odd; let isFirst = first; " class="scores" [class.odd]="odd === true" [class.first]="isFirst === true">
+                    <div class="name">{{player.name}}</div>
+                    <div class="flop">{{player.flop}}</div>
+                    <div class="river">{{player.river}}</div>
+                    <div class="turn">{{player.turn}}</div>
+                    <div class="final">{{player.score}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
